@@ -35,7 +35,7 @@ public class RepaymentScheduleRestTest {
 	private ObjectMapper mapper;
 	
 	@Test
-	public void givenEmployees_whenGetEmployees_thenReturnJsonArray()
+	public void getGeneratePlan()
 	  throws Exception {
 	     
 	    Plan plan = new Plan(5000.00, 5.0F, 24, new SimpleDateFormat("dd/MM/yyyy").parse("01/01/2018"));	    
