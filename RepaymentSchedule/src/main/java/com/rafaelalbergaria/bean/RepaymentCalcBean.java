@@ -2,8 +2,6 @@ package com.rafaelalbergaria.bean;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -15,7 +13,12 @@ import org.springframework.stereotype.Component;
 
 import com.rafaelalbergaria.model.GeneratePlan;
 import com.rafaelalbergaria.model.Plan;
-
+/**
+ * Bean used to perform the calculations necessary for generating the plan. 
+ * It was placed in the singleton pattern to be generated only one instance of the object.
+ * @author Rafael
+ * 
+ */
 @Scope(value=ConfigurableBeanFactory.SCOPE_SINGLETON)
 @Component
 public class RepaymentCalcBean {
@@ -36,7 +39,8 @@ public class RepaymentCalcBean {
 		return new BigDecimal((rateMonth * 30 * plan.getLoanAmount()) / 360 ).setScale(2, RoundingMode.HALF_UP).doubleValue();
 	}
 	
-//	public Double calcRemainingOutstandingPrincipal(Plan plan, Double paymentAmount, int paymentMade){	
+//	public Double calcRemainingOutstandingPrincipal(Plan plan, int paymentMade){
+//      Double paymentAmount = calcPaymentAmount(Plan plan);	
 //		float rateMonth = plan.getNominalRate() / 12 / 100;
 //		return ((plan.getLoanAmount() * (Math.pow(1 + rateMonth, paymentMade))) - (paymentAmount * (Math.pow(1 + rateMonth, paymentMade) - 1) / rateMonth));
 //	}
@@ -48,6 +52,11 @@ public class RepaymentCalcBean {
 		return cal.getTime();
 	}
 	
+	/**
+	 * Generates the plan recursively
+	 * @param plan
+	 * @return
+	 */
 	public List<GeneratePlan> buildGeneratePlan(Plan plan) {
 		List<GeneratePlan> list = new ArrayList<GeneratePlan>();
 		GeneratePlan generatePlan = new GeneratePlan();
@@ -66,15 +75,5 @@ public class RepaymentCalcBean {
 		}
 		
 		return list;
-	}
-	
-	public static void main(String[] args) throws ParseException {
-		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-		
-		Plan plan = new Plan(5000.00,5.00F,24,format.parse("01/01/2018") );
-		RepaymentCalcBean r = new RepaymentCalcBean();
-		r.buildGeneratePlan(plan);
-		//System.out.println(r.calcRemainingOutstandingPrincipal(plan, 2));
-	}
-	
+	}	
 }

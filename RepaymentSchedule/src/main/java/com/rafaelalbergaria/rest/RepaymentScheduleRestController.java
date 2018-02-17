@@ -13,9 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.rafaelalbergaria.model.GeneratePlan;
 import com.rafaelalbergaria.model.Plan;
 import com.rafaelalbergaria.service.RepaymentScheduleService;
-
+/**
+ * API Restfull for generate the plan
+ * @author Rafael
+ *
+ */
 @RestController
-public class RepaymentScheduleRest {
+public class RepaymentScheduleRestController {
 	@Autowired
 	RepaymentScheduleService repayment;
 	
